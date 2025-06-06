@@ -108,4 +108,31 @@ public class StepDefinitions {
             assertTrue(currentUrl.contains("faq.makers.tech"),
                     "Expected to be on the FAQs page, but was on: " + currentUrl);
         }
+    @Given("I am on Makers homepage")
+    public void I_am_on_Makers_homepage() {
+        driver.get("https://makers.tech");
     }
+
+    @When("I click the {string} navigation link")
+    public void i_Click_the_link(String linkText) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        try {
+            WebElement link = wait.until(ExpectedConditions.elementToBeClickable(By.linkText(linkText)));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", link);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", link);
+        } catch (Exception e) {
+            throw new AssertionError("Failed to click the link with text: " + linkText, e);
+        }
+    }
+
+
+    @Then("the link will take me to {string}")
+    public void the_link_will_take_me_to(String expectedUrl) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        String currentUrl = driver.getCurrentUrl();
+        assertTrue(currentUrl.contains(expectedUrl),
+                "Expected to be on: " + expectedUrl + ", but was on: " + currentUrl
+        );
+    }
+
+}
