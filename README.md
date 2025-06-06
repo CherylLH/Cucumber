@@ -1,1 +1,3 @@
-Challenge 3 & 4 to follow.
+All 4 challenges complete. 
+
+Note to self - always upload to github after each stage!!!
